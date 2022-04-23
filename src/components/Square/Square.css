@@ -1,0 +1,25 @@
+.square__wrapper {
+  width: 500px;
+  height: 500px;
+  background-color: yellow;
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
+}
+.square__subsquare {
+  user-select: none;
+  border: 1px solid black;
+}
+.square__block {
+  border: none;
+  background-color: #fff;
+}
+.block__resize {
+  height: 50%;
+  width: 50%;
+  background-color: green;
+}
+.block__drag {
+  user-select: none;
+  height: 50%;
+  width: 100%;
+}
