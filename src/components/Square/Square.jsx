@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import "./Square.css";
 
 export default function Square() {
-  const squareSize = 10;
+  const squareSize = 16;
   const [size, setSize] = useState(1);
   const [startCoord, setStartCoord] = useState([3, 3]);
+  // Hovered cell coordinates
   const [current, setCurrent] = useState(null);
   const [isOnDrag, setIsOnDrag] = useState(false);
   const [Resize, setResize] = useState(false);
@@ -26,7 +27,7 @@ export default function Square() {
   }, [current]);
 
   // drag square
-  const handleDrag = (coord) => {
+  const handleDrag = coord => {
     const [row, column] = coord;
     if (row <= squareSize - size && column <= squareSize - size) {
       setStartCoord(coord);
@@ -39,30 +40,6 @@ export default function Square() {
       setStartCoord(newCell);
       setSize(size + 1);
     }
-    //  if (
-    //    newCell[0] === startCoord[0] - 1 &&
-    //    newCell[1] === startCoord[1] + size
-    //  ) {
-    //    console.log("up + right");
-    //    setStartCoord([newCell[0], startCoord[1]]);
-    //    setSize(size + 1);
-    //  }
-
-    //  if (
-    //    newCell[0] === startCoord[0] + size &&
-    //    newCell[1] === startCoord[1] - 1
-    //  ) {
-    //    console.log("down left");
-    //    setStartCoord([startCoord[0], newCell[1]]);
-    //    setSize(size + 1);
-    //  }
-    //  if (
-    //    newCell[0] === startCoord[0] + size &&
-    //    newCell[1] === startCoord[1] + size
-    //  ) {
-    //    console.log("down + right");
-    //    setSize(size + 1);
-    //  }
 
     if (size >= 2 && isBlock(newCell)) {
       if (
@@ -73,60 +50,24 @@ export default function Square() {
         setStartCoord(newCell);
         setSize(size - 1);
       }
-      // if (
-      //   newCell[0] === startCoord[0] + 1 &&
-      //   newCell[1] === startCoord[1] + size - 1
-      // ) {
-      //   console.log("down + left dec");
-      //   setStartCoord([startCoord[0] + 1, startCoord[1]]);
-      //   setSize(size - 1);
-      // }
-      // if (
-      //   newCell[0] === startCoord[0] + size - 1 &&
-      //   newCell[1] === startCoord[1] + 1
-      // ) {
-      //   console.log("up + right dec");
-      //   setStartCoord([startCoord[0], startCoord[1] + 1]);
-      //   setSize(size - 1);
-      // }
-      // if (
-      //   newCell[0] === startCoord[0] + size - 1 &&
-      //   newCell[1] === startCoord[1] + size - 1
-      // ) {
-      //   console.log("up + left dec");
-      //   setSize(size - 1);
-      // }
     }
   };
   // detect cells that belongs to the square
-  const isBlock = (coord) => {
-    if (
+  const isBlock = coord => {
+    return (
       coord[0] <= startCoord[0] + size - 1 &&
       coord[0] >= startCoord[0] &&
       coord[1] <= startCoord[1] + size - 1 &&
       coord[1] >= startCoord[1]
-    ) {
-      return true;
-    }
-    return false;
+    );
   };
   // detect angle cells of square
-  const isResizableCell = (coord) => {
+  const isResizableCell = coord => {
     const [row, column] = coord;
-
-    if (row === startCoord[0] && column === startCoord[1]) {
-      return true;
-    }
-    //  if (row === startCoord[0] || row === startCoord[0] + size - 1) {
-    //    if (column === startCoord[1] || column === startCoord[1] + size - 1) {
-    //      return true;
-    //    }
-    //  }
-
-    return false;
+    return row === startCoord[0] && column === startCoord[1];
   };
   // generate table and its square
-  const getLayout = (size) => {
+  const getLayout = size => {
     let items = [];
     for (let row = 0; row < size; row++) {
       for (let column = 0; column < size; column++) {
@@ -135,7 +76,7 @@ export default function Square() {
             key={`${row}.${column}`}
             onMouseEnter={() => setCurrent([row, column])}
             className={`square__subsquare`}
-          ></div>
+          />
         );
 
         let block = (
@@ -153,13 +94,13 @@ export default function Square() {
                     : null
                 }
                 className="block__resize"
-              ></div>
+              />
             )}
             <div
               onMouseEnter={() => setCurrent([row, column])}
               onMouseDown={() => setIsOnDrag(true)}
               className="block__drag"
-            ></div>
+            />
           </div>
         );
         items.push(isBlock([row, column]) ? block : cell);

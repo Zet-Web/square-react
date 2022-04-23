@@ -3,7 +3,6 @@
   height: 500px;
   background-color: yellow;
   display: grid;
-  /* grid-template-columns: repeat(3, 1fr); */
 }
 .square__subsquare {
   user-select: none;
@@ -13,13 +12,20 @@
   border: none;
   background-color: #fff;
 }
+
 .block__resize {
   height: 50%;
   width: 50%;
   background-color: green;
+  cursor: nw-resize;
+
 }
 .block__drag {
   user-select: none;
-  height: 50%;
+  height: 100%;
   width: 100%;
+}
+
+.square__subsquare.square__block {
+  cursor: grab;
 }
